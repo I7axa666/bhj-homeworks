@@ -1,16 +1,25 @@
-function changeClass() {
-    let span = Array.from(document.getElementsByClassName('rotator__case'));
-    span.forEach((el, i) => {
-        if(el.classList.contains('rotator__case_active')) {
-            el.classList.remove('rotator__case_active');            
-            if(i === span.length - 1) {
-                return span[0].classList.add('rotator__case_active');
+
+let i = 0;
+
+function changeClass(i) {
+    
+    let int = setInterval(() => {
+        let span = document.getElementsByClassName('rotator__case')
+        
+        if (span[i].classList.contains('rotator__case_active')) {
+            span[i].classList.remove('rotator__case_active')
+            if (i == span.length - 1) {
+                span[0].classList.add('rotator__case_active');
+                i = 0;
             } else {
-                return span[i=+1].classList.toggle('rotator__case_active');
-                
+                span[i += 1].classList.add('rotator__case_active');
             }
+            
         }
-    })
+        
+
+    }, 1000)
+    
 };
 
-setInterval(() => {changeClass()}, 1000);
+changeClass(i)
