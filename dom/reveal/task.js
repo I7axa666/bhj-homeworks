@@ -1,7 +1,7 @@
 
 function isVis (el) {
     const { top, bottom } = el.getBoundingClientRect();
-    if (bottom > 0) {
+    if (top <= window.innerHeight) {
         el.classList.add('reveal_active')
     }
 
