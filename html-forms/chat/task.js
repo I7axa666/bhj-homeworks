@@ -1,7 +1,6 @@
 const botMessages = [
     'Привет',
     'Пффф, вот еще!',
-    ,
     'Что надо то?',
     'Дома нет никто!',
     'Извините, не расслышал...',
@@ -34,7 +33,7 @@ chat.addEventListener('click', (event) => {
 
 document.addEventListener('keyup', (event) => {
     if (event.code === 'Enter') {
-        if (!input.value){return}
+        if (!input.value || input.value.trim().length == 0){return}
         
         chatMessages.innerHTML += `<div class="message message_client">
                                    <div class="message__time">${getTime ()}</div> 
@@ -42,8 +41,8 @@ document.addEventListener('keyup', (event) => {
         input.value = '';       
         chatMessages.innerHTML += `<div class="message"> 
                                    <div class="message__time">${getTime ()}</div> 
-                                   <div class="message__text">${botMessages[Math.floor(Math.random() * (botMessages.length) + 0 )]}</div></div>`
-    
+                                   <div class="message__text">${botMessages[Math.floor(Math.random() * ((botMessages.length) - 1) + 0 )]}</div></div>`
+        console.log(Math.floor(Math.random() * ((botMessages.length) - 1) + 0), botMessages[Math.floor(Math.random() * ((botMessages.length) - 1) + 0 )]);
     }
     
 })
