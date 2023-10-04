@@ -1,14 +1,15 @@
 const addButton = document.querySelectorAll('.product__add');
 const incButton = document.querySelectorAll('.product__quantity-control_inc');
 const decButton = document.querySelectorAll('.product__quantity-control_dec');
-const cartTitle = document.querySelector('.cart');
+const cartTitle = document.querySelector('.cart__products');
 const productList = [];
 
 
 
 function addProduct (el, count) {
     let countProduct = count;
-    if (productList.indexOf(el.closest('.product').dataset.id))  {
+    console.log(productList.indexOf('3'))
+    if (productList.indexOf(el.closest('.product').dataset.id) < 0)  {
         let product = `<div class="cart__product" data-id="${el.closest('.product').dataset.id}">
                         <img class="cart__product-image" src="${el.closest('.product').querySelector('img').src}">
                         <div class="cart__product-count">${countProduct}</div>
