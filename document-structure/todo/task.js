@@ -6,19 +6,18 @@ document.querySelector('form').addEventListener('submit', e => {e.preventDefault
 
 pushButton.addEventListener('click', (event) => {
     
-    if (input.value) {
+    if (input.value.trim().length !== 0) {
         let task = `<div class="task">
                         <div class="task__title">${input.value}</div>
-                        <a href="#" class="task__remove">&times;</a>
+                        <a href="#" data-title="${input.value}" class="task__remove">&times;</a>
                     </div>`;
         
         list.insertAdjacentHTML('beforeEnd', task);
-        input.value = '';
-
-        Array.from(document.querySelectorAll(`.task__remove`)).at(-1).addEventListener('click', (event) => {
-            let el = Array.from(document.querySelectorAll(`.task__remove`)).at(-1);        
-            el.parentElement.remove();
-        })  
+        let removeButton = document.querySelector(`.task__remove[data-title="${input.value}"]`)
+        removeButton.addEventListener('click', (event) => {
+            removeButton.parentElement.remove();
+        })
+        input.value = '';  
         
     }
 })
