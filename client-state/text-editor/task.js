@@ -1,16 +1,12 @@
-const textContetn = document.querySelector('textarea'),
-      storedText = localStorage.getItem('text');
+const textContetn = document.querySelector('textarea');
+const storedText = localStorage.getItem('text');
+
+if(storedText) {
+    textContetn.value = storedText
+}
+
+window.onbeforeunload = () => {
+    localStorage.setItem('text', textContetn.value);
+}
 
 
-setInterval(() => {
-    if (!textContetn.value) {
-        if(storedText) {
-            textContetn.value = storedText
-        }
-        
-    } else {
-
-        localStorage.setItem('text', textContetn.value);     
-        
-    }
-}, 1000)

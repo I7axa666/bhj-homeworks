@@ -1,7 +1,6 @@
 const popWind = document.getElementById('subscribe-modal');
 const popClose = document.querySelector('.modal__close');
 
-
 function setCookie(name, value) {
     document.cookie = name + '=' + encodeURIComponent(value)
 }
@@ -13,20 +12,13 @@ function getCookie(name) {
 }
 
 
-if(document.cookie) {
-    if(getCookie('isClose') == '1') {
-        popWind.classList.contains('modal_active')
-    }
-
-} else {
+if(!document.cookie) {
     popWind.classList.add('modal_active');
-    popClose.addEventListener('click', event => {
-        event.preventDefault();
-        popWind.classList.remove('modal_active');
-        setCookie('isClose', 1);
-        console.log(document.cookie)
-    })
 }
 
 
-
+popClose.addEventListener('click', event => {
+    event.preventDefault();
+    popWind.classList.remove('modal_active');
+    setCookie('isClose', 1);
+})
