@@ -6,10 +6,10 @@ const sendForm = document.forms.form,
 sendForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    xhr.addEventListener('readystatechange', () => {
-        progress.value += 0.25;
+    xhr.onprogress = function(event) {
+        progress.value = event.loaded / event.total;
 
-    })
+    }
     
 
     xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/upload');

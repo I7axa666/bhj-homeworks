@@ -1,10 +1,11 @@
 const item = document.getElementById('items');
 const loader = document.getElementById('loader');
+const fragment = new DocumentFragment;
 
 const xhr = new XMLHttpRequest();
 
-xhr.addEventListener('readystatechange', () => {
-    if(xhr.readyState === xhr.DONE){
+xhr.onload = function() {
+    if (xhr.status == 200) {
         loader.classList.remove('loader_active')
     }
      
@@ -15,16 +16,28 @@ xhr.addEventListener('readystatechange', () => {
     })
 
     charCodeList.forEach(element => {
-        console.log(JSON.parse(xhr.response).response.Valute[element])
-        let dataValute = `<div class="item">
-        <div class="item__code">${JSON.parse(xhr.response).response.Valute[element]['CharCode']}</div>
-                <div class="item__value">${JSON.parse(xhr.response).response.Valute[element]['Value']}</div>
-                <div class="item__currency">руб.</div></div>
-                `;
+        let divItem = document.createElement('div');
+        divItem.classList.add('item');
         
-        item.insertAdjacentHTML('beforeend', dataValute);
+        let divItemCode = document.createElement('div');
+        divItemCode.classList.add('item__code');
+        divItemCode.textContent = JSON.parse(xhr.response).response.Valute[element]['CharCode'];
+        
+        let divItemValue = document.createElement('div');
+        divItemValue.classList.add('item__value');
+        divItemValue.textContent = JSON.parse(xhr.response).response.Valute[element]['Value'];
+        
+        let divItemCurrency = document.createElement('div');
+        divItemCurrency.classList.add('item__currency');
+        divItemCurrency.textContent = 'руб.';
+
+        divItem.append(divItemCode, divItemValue, divItemCurrency)
+        fragment.append(divItem);
+
     });
-})
+
+    item.append(fragment);
+}
 
 
 xhr.open('GET', " https://students.netoservices.ru/nestjs-backend/slow-get-courses")

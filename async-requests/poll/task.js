@@ -1,10 +1,14 @@
-const pollTitle = document.getElementById('poll__title')
-const pollAnswer = document.getElementById('poll__answers')
-
+const pollTitle = document.getElementById('poll__title');
+const pollAnswer = document.getElementById('poll__answers');
+const fragment = new DocumentFragment;
 const xhr = new XMLHttpRequest();
 
-xhr.addEventListener('readystatechange', () => {
-    if(xhr.readyState === xhr.DONE){
+xhr.open('GET', "https://students.netoservices.ru/nestjs-backend/poll")
+
+xhr.send()
+
+xhr.onload = function() {
+    if (xhr.status == 200) {
         let resp = xhr.responseText;
         let respArray = {}
         JSON.parse(resp,(key, value) => {
@@ -15,15 +19,15 @@ xhr.addEventListener('readystatechange', () => {
 
         for(let i = 0; i< Number(respArray['answers'].length); i++) {
     
-            let answ = `<button class="poll__answer">
-                        ${respArray[String(i)]}
-                        </button>`
-          
-            pollAnswer.insertAdjacentHTML('beforeend', answ);
+            let button = document.createElement('button');
+            button.classList.add('poll__answer');
+            button.textContent = respArray[String(i)];
+            fragment.append(button)          
+
+            pollAnswer.append(fragment);
         }
         
         const but = document.querySelectorAll('.poll__answer')
-        console.log(but)
         but.forEach(el => {
             el.addEventListener('click', event => {
                 event.preventDefault()
@@ -31,9 +35,4 @@ xhr.addEventListener('readystatechange', () => {
             })
         })
     }
-    
-})
-
-xhr.open('GET', "https://students.netoservices.ru/nestjs-backend/poll")
-
-xhr.send()
+}
